@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@100;300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap" rel="stylesheet">
+
+    <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+
+    <title>Library Simulator</title>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">Library Simulator</h1>
+        <button id="btn-new" class="btn">ADD</button>
+        <button id="btn-logout" class="btn">ACC</button>
+    <div id="container">
+    </header>
+
+    <div id="login">
+        <div id="firebaseui-auth-container"></div>
+        <div id="loader">Loading...</div>
+        <p>Or click <button type="button" id="btn-local-mode">here</button> to use local storage.</p>
+    </div>
+
+        <div class="form-div" id="form-add-div">
+            <form id="form-add" class="form-container">
+                <ul>
+                    <li>
+                        <label for="title"></label>
+                        <input type="text" name="book_title" id="title"
+                         class="form-input" placeholder="Title">
+                    </li>
+                    <li>
+                        <label for="title"></label>
+                        <input type="text" name="book_author" id="author"
+                        class="form-input" placeholder="Author">
+                    </li>
+                    <li>
+                        <label for="title"></label>
+                        <input type="number" name="book_pages" id="pages"
+                        class="form-input" placeholder="Number of pages">
+                    </li>
+                    <li>
+                        <label for="title">Have you read this book?</label>
+                        <input type="checkbox" name="book_read" id="have-read">
+                    </li>
+                    <li>
+                        <button type="button" id="btn-submit">Submit</button>
+                    </li> 
+                    <li>
+                        <p id="para-form">Please fill out all fields.</p>
+                    </li>
+                </ul>
+                <button type="button" id="btn-form-close" class="btn-close"></button>
+            </form>
+        </div>
+
+        
+        <div id="book-meta" class="meta-container"></div>
+            <div id="books-container" class="row">
+
+            </div>
+        </div>
+
+        
+    </div>
+
+
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.2/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.0/firebase-auth.js"></script>
+<link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyDc-Xl2pDLPeDh-roIxcnbHeXRR6V0ymTM",
+    authDomain: "library-8ffb2.firebaseapp.com",
+    projectId: "library-8ffb2",
+    storageBucket: "library-8ffb2.appspot.com",
+    messagingSenderId: "993987022531",
+    appId: "1:993987022531:web:4f363ccf6275c644aadc76",
+    measurementId: "G-YW94K1YQHK",
+    databaseURL: "https://library-8ffb2-default-rtdb.europe-west1.firebasedatabase.app"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  //firebase.analytics();
+</script>
+             <script src="main.js"></script>
+</body>
+</html>
