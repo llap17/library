@@ -78,6 +78,7 @@ function getBooksWeb(){
     if (snapshot.exists()) {
       console.table(snapshot.val());
       myLibrary = snapshot.val();
+      renderBooks();
     } else {
       return;
     }
@@ -146,69 +147,19 @@ function displayBooks(){
     if(!localStorage.getItem('books')){
       let theHobbit = new AddBook("The Hobbit", "J.R.R. Tolkien", '310', false)
       let braveNewWorld = new AddBook("Brave New World", "Aldous Huxley", '311', true)
+      renderBooks();
     }else{
       myLibrary = downBooks();
+      renderBooks();
       console.table(myLibrary);
     }
   }else if(mode == "web"){
     getBooksWeb();
     console.table(myLibrary);
   }
-  for (let i = 0; i < myLibrary.length; i++) {
-    var book = document.createElement("div");
-    var paraBookTitle = document.createElement("p");
-    var paraBookAuthor = document.createElement("p");
-    var paraBookPages = document.createElement("p");
-    var paraBookRead = document.createElement("p");
-    var btnDelete = document.createElement("button");
-    var btnRead = document.createElement("input");
-    var btnReadLabel = document.createElement("label");
-    var btnReadSpan = document.createElement("span");
-    //BOOK ELEMENT
-    book.setAttribute("id", "book-" + i);
-    book.classList.add("book");
-    paraBookTitle.setAttribute("id", "para-title-" + i);
-    paraBookTitle.setAttribute("class", "para-book");
-    paraBookTitle.innerHTML = "Title: " + myLibrary[i].title;
-    paraBookAuthor.setAttribute("id", "para-author-" + i);
-    paraBookAuthor.setAttribute("class", "para-book");
-    paraBookAuthor.innerHTML = "Author: " + myLibrary[i].author;
-    paraBookPages.setAttribute("id", "para-pages-" + i);
-    paraBookPages.setAttribute("class", "para-book");
-    paraBookPages.innerHTML = myLibrary[i].pages + " Pages";
-    paraBookRead.setAttribute("id", "para-read-" + i);
-    paraBookRead.setAttribute("class", "para-book");
-    //BUTTON DELETE ELEMENT
-    btnDelete.setAttribute("id", "btn-delete-" + i);
-    btnDelete.setAttribute("class", "btn-delete");
-    //BUTTON HAVE READ ELEMENT
-    btnRead.setAttribute("type", "checkbox");
-    btnRead.setAttribute("id", "book-read-" + i);
-    btnRead.setAttribute("class", "btn-read");
-    btnReadLabel.setAttribute("class", "switch");
-    btnReadSpan.setAttribute("class", "slider round");
-    if (myLibrary[i].haveRead == true) {
-      paraBookRead.innerHTML = "You have read this book."
-      btnRead.checked = true;
-    }else{
-      paraBookRead.innerHTML = "You haven't read this book."
-      btnRead.checked = false;
-    }
-    //LOCAL STORAGE
-    if(!localStorage.getItem(myLibrary)){
-      
-    }
-    //APPENDING ELEMENTS
-    bookContainer.appendChild(book);
-    book.appendChild(paraBookTitle);
-    book.appendChild(paraBookAuthor);
-    book.appendChild(paraBookPages);
-    book.appendChild(paraBookRead);
-    btnReadLabel.appendChild(btnRead);
-    btnReadLabel.appendChild(btnReadSpan);
-    book.appendChild(btnDelete);
-    book.appendChild(btnReadLabel);
-  }
+  console.log("test 2");
+  console.table(myLibrary);
+  
     //DELETE BUTTONS
     var btnsDelete = document.querySelectorAll(".btn-delete");
     btnsDelete.forEach(btn => btn.addEventListener("click", function(){
@@ -284,6 +235,63 @@ btnCloseForm.addEventListener("click", function(){
     document.getElementById("form-add").style.display = "none";
   }
 });
+
+function renderBooks() {
+  for (let i = 0; i < myLibrary.length; i++) {
+    var book = document.createElement("div");
+    var paraBookTitle = document.createElement("p");
+    var paraBookAuthor = document.createElement("p");
+    var paraBookPages = document.createElement("p");
+    var paraBookRead = document.createElement("p");
+    var btnDelete = document.createElement("button");
+    var btnRead = document.createElement("input");
+    var btnReadLabel = document.createElement("label");
+    var btnReadSpan = document.createElement("span");
+    //BOOK ELEMENT
+    book.setAttribute("id", "book-" + i);
+    book.classList.add("book");
+    paraBookTitle.setAttribute("id", "para-title-" + i);
+    paraBookTitle.setAttribute("class", "para-book");
+    paraBookTitle.innerHTML = "Title: " + myLibrary[i].title;
+    paraBookAuthor.setAttribute("id", "para-author-" + i);
+    paraBookAuthor.setAttribute("class", "para-book");
+    paraBookAuthor.innerHTML = "Author: " + myLibrary[i].author;
+    paraBookPages.setAttribute("id", "para-pages-" + i);
+    paraBookPages.setAttribute("class", "para-book");
+    paraBookPages.innerHTML = myLibrary[i].pages + " Pages";
+    paraBookRead.setAttribute("id", "para-read-" + i);
+    paraBookRead.setAttribute("class", "para-book");
+    //BUTTON DELETE ELEMENT
+    btnDelete.setAttribute("id", "btn-delete-" + i);
+    btnDelete.setAttribute("class", "btn-delete");
+    //BUTTON HAVE READ ELEMENT
+    btnRead.setAttribute("type", "checkbox");
+    btnRead.setAttribute("id", "book-read-" + i);
+    btnRead.setAttribute("class", "btn-read");
+    btnReadLabel.setAttribute("class", "switch");
+    btnReadSpan.setAttribute("class", "slider round");
+    if (myLibrary[i].haveRead == true) {
+      paraBookRead.innerHTML = "You have read this book.";
+      btnRead.checked = true;
+    } else {
+      paraBookRead.innerHTML = "You haven't read this book.";
+      btnRead.checked = false;
+    }
+    //LOCAL STORAGE
+    if (!localStorage.getItem(myLibrary)) {
+    }
+    //APPENDING ELEMENTS
+    bookContainer.appendChild(book);
+    book.appendChild(paraBookTitle);
+    book.appendChild(paraBookAuthor);
+    book.appendChild(paraBookPages);
+    book.appendChild(paraBookRead);
+    btnReadLabel.appendChild(btnRead);
+    btnReadLabel.appendChild(btnReadSpan);
+    book.appendChild(btnDelete);
+    book.appendChild(btnReadLabel);
+  }
+}
 
 //FADE ANIMATION FUNCTIONS
 function fadeOut(el){
