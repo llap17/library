@@ -139,8 +139,6 @@ function displayBooks(){
   }
 }
 
-
-
 //SUBMIT BOOK BUTTON
 btnSubmit.addEventListener("click", function(){
   if(authorInput.value.length < 1 ||
@@ -262,22 +260,26 @@ function renderBooks() {
         //HAVE READ BUTTON
         var btnsRead = document.querySelectorAll(".btn-read");
         btnsRead.forEach(btn => btn.addEventListener("click", function(){
+          console.log("test");
         let a = btn.id.substring(10);
         if (btn.checked == true) {
           myLibrary[a].haveRead = true;
           if(mode == 'local'){
             storeBooks();
           }else if(mode == 'web'){
-            storeBooksWeb;
+            storeBooksWeb();
           }
         }else{
           myLibrary[a].haveRead = false;
           if (mode == 'local') {
             storeBooks();
           }else if (mode == 'web') {
-            storeBooksWeb;
+            storeBooksWeb();
           }
         }
+        console.table(myLibrary);
+        document.querySelectorAll(".book").forEach(el => el.remove());
+        renderBooks();
       }));
   }
 }
