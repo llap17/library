@@ -47,7 +47,6 @@ var uiConfig = {
       // User successfully signed in.
       // Return type determines whether we continue the redirect automatically
       // or whether we leave that to developer to handle.
-      console.log("Sign in successful");
       return true;
     },
     uiShown: function() {
@@ -76,26 +75,12 @@ function storeBooksWeb(){
 function getBooksWeb(){
   dbRef.child("users").child(uid).get().then((snapshot) => {
     if (snapshot.exists()) {
-      console.table(snapshot.val());
       myLibrary = snapshot.val();
       renderBooks();
     } else {
       return;
     }
-  })
-}
-
-function testLog(){
-  let dbRef = firebase.database().ref();
-  dbRef.child("users").child(uid).get().then((snapshot) => {
-    if (snapshot.exists()) {
-      let dbRef = snapshot.val();
-      console.log(dbRef);
-    } else {
-      console.log("No data available");
-    }
-  })
-  console.log(dbRef);
+  });
 }
 
 //USER AUTH STATE OBSERVER
@@ -105,8 +90,6 @@ firebase.auth().onAuthStateChanged((user) => {
     mode = "web";
     login.style.display = "none";
     uid = user.uid;
-    console.log(uid);
-    console.log("log in success");
     displayBooks();
   } else {
     // user has singed out
@@ -117,7 +100,6 @@ firebase.auth().onAuthStateChanged((user) => {
 btnOut.addEventListener("click", function(){
   firebase.auth().signOut().then(() => {
     //Sign-out successfull
-    console.log("Successfully Signed-Out");
     login.style.display = "flex";
   }).catch((error) => {
     //Sign-out error
@@ -151,47 +133,13 @@ function displayBooks(){
     }else{
       myLibrary = downBooks();
       renderBooks();
-      console.table(myLibrary);
     }
   }else if(mode == "web"){
     getBooksWeb();
-    console.table(myLibrary);
   }
-  console.log("test 2");
-  console.table(myLibrary);
-  
-    //DELETE BUTTONS
-    var btnsDelete = document.querySelectorAll(".btn-delete");
-    btnsDelete.forEach(btn => btn.addEventListener("click", function(){
-    let a = btn.id.substring(11);
-    let b = document.getElementById("book-" + a);
-    fadeOut(b);
-    b.ontransitionend = () => {
-      myLibrary.splice(a, 1);
-      b.remove();
-      if(mode == "local"){
-        storeBooks();
-      }else if(mode == "web"){
-        storeBooksWeb();
-      }
-      displayBooks();
-    }
-  }));
-    //HAVE READ BUTTON
-    var btnsRead = document.querySelectorAll(".btn-read");
-    btnsRead.forEach(btn => btn.addEventListener("click", function(){
-    let a = btn.id.substring(10);
-    if (btn.checked == true) {
-      myLibrary[a].haveRead = true;
-      storeBooks();
-      displayBooks();
-    }else{
-      myLibrary[a].haveRead = false;
-      storeBooks();
-      displayBooks();
-    }
-  }));
 }
+
+
 
 //SUBMIT BOOK BUTTON
 btnSubmit.addEventListener("click", function(){
@@ -215,14 +163,18 @@ btnSubmit.addEventListener("click", function(){
 
 //SHOW ADD BOOK FORM BUTTON
 btnNew.addEventListener("click", function(){
-  if(submitForm.style.display == "flex"){
-    fadeOut(submitForm);
-    submitForm.ontransitionend = () => {
-      submitForm.style.display = "none";
-    }
+  if(login.style.display == "flex"){
+    return;
   }else{
-    submitForm.style.display = "flex";
-    fadeIn(submitForm);
+    if(submitForm.style.display == "flex"){
+      fadeOut(submitForm);
+      submitForm.ontransitionend = () => {
+        submitForm.style.display = "none";
+      }
+    }else{
+      submitForm.style.display = "flex";
+      fadeIn(submitForm);
+    }
   }
 });
 
@@ -290,6 +242,43 @@ function renderBooks() {
     btnReadLabel.appendChild(btnReadSpan);
     book.appendChild(btnDelete);
     book.appendChild(btnReadLabel);
+        //DELETE BUTTONS
+        var btnsDelete = document.querySelectorAll(".btn-delete");
+        btnsDelete.forEach(btn => btn.addEventListener("click", function(){
+        let a = btn.id.substring(11);
+        let b = document.getElementById("book-" + a);
+        fadeOut(b);
+        b.ontransitionend = () => {
+          myLibrary.splice(a, 1);
+          b.remove();
+          if(mode == "local"){
+            storeBooks();
+          }else if(mode == "web"){
+            storeBooksWeb();
+          }
+          displayBooks();
+        }
+      }));
+        //HAVE READ BUTTON
+        var btnsRead = document.querySelectorAll(".btn-read");
+        btnsRead.forEach(btn => btn.addEventListener("click", function(){
+        let a = btn.id.substring(10);
+        if (btn.checked == true) {
+          myLibrary[a].haveRead = true;
+          if(mode == 'local'){
+            storeBooks();
+          }else if(mode == 'web'){
+            storeBooksWeb;
+          }
+        }else{
+          myLibrary[a].haveRead = false;
+          if (mode == 'local') {
+            storeBooks();
+          }else if (mode == 'web') {
+            storeBooksWeb;
+          }
+        }
+      }));
   }
 }
 

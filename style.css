@@ -11,6 +11,9 @@ body{
     display: flex;
     flex-direction: column;
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-45%, -50%);
     align-items: center;
     background-color: #FFFFFF;
     opacity: 95%;
@@ -23,7 +26,7 @@ body{
     font-family: 'Merriweather', serif;
     font-size: 1em;
     position: relative;
-    bottom: 4px;
+    bottom: 4.5px;
 }
 
 .header{
@@ -38,26 +41,41 @@ body{
     margin-left: auto;
 }
 
+#nav-bar{
+    display: flex;
+    padding-left: 2em;
+    position: absolute;
+    right: 0;
+    height: 2em;
+}
+#btn-logout{
+    background-color: #14213D;
+    color: white;
+    border: none;
+    cursor: pointer;
+    max-width: 50px;
+    height: 100%;
+    font-family: 'Nunito', sans-serif;
+}
+
+#btn-logout:hover{
+    background-color: #14213D;
+    color: #FCA311;
+}
+
 #btn-new{
     background-color: #14213D;
     color: white;
     border: none;
     cursor: pointer;
-    position: absolute;
-    right: 0;
-    width: 10%;
+    max-width: 50px;
     height: 100%;
     font-family: 'Nunito', sans-serif;
 }
 
 #btn-new:hover{
-    background-color: #FCA311;
+    background-color: #14213D;
     color: #FCA311;
-    background: linear-gradient(100deg, #14213D, #BFC0C0 555%)
-}
-
-#btn-new:active{
-    background: linear-gradient(100deg, #14213D, #BFC0C0 255%)
 }
 
 .form-container{
